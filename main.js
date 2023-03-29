@@ -66,3 +66,5 @@ function renderList(items, itemsList)
 reminderForm.addEventListener("submit", addReminderItem);
 
 renderList(reminders, reminderList);
+
+//Couldn't manage to fingure out how to delete (tried really hard for this one), mark as finished, or include an empty state, :(
