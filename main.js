@@ -7,38 +7,64 @@
 // Variables
 //
 
-// Constants
-const appID = "app";
-const headingText = "To do. To done. ✅";
-
-// Variables
-
-// DOM Elements
-let appContainer = document.getElementById(appID);
+const reminders = [];
+const reminderList = document.querySelector(".reminder-list");
+const reminderForm = document.querySelector(".add-reminder");
+const reminderName = document.querySelector("#new-reminder-input");
 
 //
 // Functions
 //
 
-// Add a heading to the app container
-function inititialise() {
-  // If anything is wrong with the app container then end
-  if (!appContainer) {
-    console.error("Error: Could not find app contianer");
-    return;
-  }
+function addReminderItem(e) 
+{
+  
+  e.preventDefault();
 
-  // Create an h1 and add it to our app
-  const h1 = document.createElement("h1");
-  h1.innerText = headingText;
-  appContainer.appendChild(h1);
-
-  // Init complete
-  console.log("App successfully initialised");
+  const rName = reminderName.value;
+   const rNull = rName === '';
+if (rNull) 
+{
+     alert("Please write a reminder!")
+}
+else 
+{  
+  reminders.push(rName);
+  renderList(reminders, reminderList);
+  reminderForm.reset();
+}
 }
 
-//
-// Inits & Event Listeners
-//
+function renderList(items, itemsList) 
+{
+ 
+  while (itemsList.firstChild) 
+  {
+    itemsList.removeChild(itemsList.firstChild);
+  }
+ 
+  for (let i = 0; i < items.length; i++)
+  {
+    const listItem = document.createElement("li");
+    listItem.textContent = items[i];
 
-inititialise();
+    const rDelete = document.createElement("button");
+    rDelete.innerHTML = "<img src='images/Trash.png' width=20px/>"
+
+    rDelete.style.cursor = "pointer";
+
+    listItem.appendChild(rDelete);
+
+   if (i === items.length - 1) 
+    {
+      listItem.classList.add("new-item-annimate");
+    }
+    itemsList.appendChild(listItem);
+  }
+}
+
+reminderForm.addEventListener("submit", addReminderItem);
+
+renderList(reminders, reminderList);
+
+//Couldn't manage to fingure out how to delete (tried really hard for this one), mark as finished, or include an empty state, :(
